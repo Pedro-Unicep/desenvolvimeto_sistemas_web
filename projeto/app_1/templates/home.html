@@ -1,0 +1,17 @@
+<!DOCTYPTE html>
+<html>
+<head>
+ <title>Login</title>
+</head>
+<body>
+ <h1>Login</h1>
+     <form method="post" action="{% url 'nome_url' %}">
+         {% csrf_token %}
+         <label for="Nome">Nome:</label><br>
+         <input type="text" name="nome"><br>
+         <label for="Senha">Senha:</label><br>
+         <input type="password" name="senha"><br>
+         <button type="submit">Enviar</button>
+     </form>
+</body>
+</html>

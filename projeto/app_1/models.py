@@ -1,9 +1,19 @@
 from django.db import models
 
 # Create your models here.
-class Usuario(models.Model):
-    nome = models.CharField(max_length=100)
-    senha = models.CharField(max_length=100)
+class User(models.Model):
+    user_id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=100)
+    password = models.CharField(max_length=100)
 
     def __str__(self):
-        return self.nome
+        return self.name
+
+class Task(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='tasks')
+    description = models.CharField(max_length=255)
+    date = models.DateField()
+    cost = models.DecimalField(max_digits=10, decimal_places=2)
+
+    def _str_(self):
+        return self.description

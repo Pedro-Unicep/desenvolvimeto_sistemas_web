@@ -1,37 +1,44 @@
-from django.shortcuts import render
-from django.http import HttpResponse
-
-from .models import Usuario
-
-def sincrono_view(request):
-    return render(request, 'sincrono.html')
-
-def assincrono_view(request):
-    return render(request, 'assincrono.html')
-
-def fetch_teste_txt(request):
-    try:
-        with open('app_1/teste.txt', 'r') as file:
-            content = file.read()
-    except FileNotFoundError as e:
-        content = 'Arquivo não encontrado.'
-    return HttpResponse(content)
-
+from django.shortcuts import render, redirect
+from .forms import UserForm, TaskForm
+from .models import User
 
 def index(request):
-    return render(request, 'home.html')
+    return render(request, 'index.html')
 
-def submit_form(request):
+def create_user(request):
     if request.method == 'POST':
-        try:
-            nome_user = request.POST.get('nome')
-            senha_user = request.POST.get('senha')
-            try:
-                usuario = Usuario.objects.get(nome = nome_user, senha=senha_user)
-                return HttpResponse('Dados conferem com registro existente.')
-            except Usuario.DoesNotExist:
-                return HttpResponse('Dados não encontrados no banco de dados.')
-        except Exception as e:
-            return HttpResponse('Erro ao processar a requisição.', status=500)
-    return render('Método não permitido', status=405)
+        form = UserForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('successful_user_creation')
+    else:
+        form = UserForm()
+    return render(request, 'create_user.html', {'form': form})
+
+def list_users(request):
+    users = User.objects.all()
+    return render(request, 'list_users.html', {'users': users})
+
+def successful_user_creation(request):
+    return render(request, 'successful_user_creation.html')
+
+def create_task(request):
+    if request.method == 'POST':
+        form = TaskForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('successful_task_creation')
+    else:
+        form = TaskForm()
+    return render(request, 'create_task.html', {'form': form})
+
+def successful_task_creation(request):
+    return render(request, 'successful_task_creation.html')
+
+def list_tasks(request, user_id):
+    user = User.objects.get(pk=user_id)
+    tasks = user.tasks.all()
+    return render(request, 'list_tasks.html', {'user': user,'tasks': tasks})
+
+
 

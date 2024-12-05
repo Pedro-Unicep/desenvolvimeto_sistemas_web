@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}Crate User{% endblock %}
+
+{% block header %}Create New User{% endblock %}
+
+{% block content %}
+
+<h2>Create User</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+        <button type="submit">Create</button>
+</form>
+
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}List Tasks{% endblock %}
+
+{% block header %}List Tasks for User{% endblock %}
+
+{% block content %}
+
+<h2>Tasks</h2>
+<ul>
+  {% for task in tasks %}
+    <li>{{ task.description }} - {{ task.date }} - {{ task.cost }}</li>
+  {% endfor %}
+</ul>
+{% endblock %}

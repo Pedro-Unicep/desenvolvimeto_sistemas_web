@@ -1,5 +1,4 @@
 from django.shortcuts import render, redirect
-from dal import autocomplete
 from .forms import UserForm, TaskForm
 from .models import User
 

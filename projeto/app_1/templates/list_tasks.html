@@ -7,9 +7,30 @@
 {% block content %}
 
 <h2>Tasks</h2>
-<ul>
-  {% for task in tasks %}
-    <li>{{ task.description }} - {{ task.date }} - {{ task.cost }}</li>
-  {% endfor %}
-</ul>
+  <table>
+    <thead>
+    <tr>
+      <th>Description</th>
+      <th>Expiration Date</th>
+      <th>Cost (R$)</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for task in tasks %}
+    <tr>
+      <td class="task_description">{{ task.description }}</td>
+      <td class="task_date">{{ task.date }}</td>
+      <td class="task_cost">R$ {{ task.cost }}</td>
+    </tr>
+    {% endfor %}
+    {% if tasks.count == 0 %}
+    <tr>
+      <td class="task_description">This user does not have any tasks</td>
+      <td class="task_date">01/01/2000</td>
+      <td class="task_cost">R$ 0,00</td>
+    </tr>
+    {% endif %}
+    </tbody>
+  </table>
+
 {% endblock %}

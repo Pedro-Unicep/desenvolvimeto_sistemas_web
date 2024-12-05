@@ -4,4 +4,34 @@
 
 {% block header %}Main Menu{% endblock %}
 
-{% block content %}{% endblock %}
+{% block content %}
+{% load static %}
+<div id="sprite-container">
+    <img id="sprite" src="{% static 'img/sprite1.png' %}"
+         width="100" height="100"
+         alt="Sprite Animation">
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const spritePaths = [
+            "{% static 'img/01_Woodcutter_run.png' %}",
+            "{% static 'img/02_Woodcutter_run.png' %}",
+            "{% static 'img/03_Woodcutter_run.png' %}",
+            "{% static 'img/04_Woodcutter_run.png' %}",
+            "{% static 'img/05_Woodcutter_run.png' %}",
+        ];
+
+        let currentSpriteIndex = 0;
+        const spriteElement = document.getElementById('sprite');
+
+        function animateSprites() {
+            spriteElement.src = spritePaths[currentSpriteIndex];
+            currentSpriteIndex = (currentSpriteIndex + 1) % spritePaths.length;
+            setTimeout(animateSprites, 150);
+        }
+
+        animateSprites();
+    });
+</script>
+{% endblock %}

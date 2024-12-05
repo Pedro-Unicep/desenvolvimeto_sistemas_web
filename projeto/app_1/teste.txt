@@ -1,2 +1,0 @@
-“Sou o conteúdo do arquivo teste.txt"
-“Sou o conteúdo do arquivo teste.txt"

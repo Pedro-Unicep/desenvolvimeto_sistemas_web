@@ -1,16 +1,27 @@
 {% extends 'base.html' %}
 
-{% block title %}Create User{% endblock %}
-
-{% block header %}Create New User{% endblock %}
-
+{% block title %}User Maintenance{% endblock %}
+{% block header %}User Maintenance{% endblock %}
 {% block content %}
-
 <h2>Create User</h2>
 <form method="post">
     {% csrf_token %}
-    {{ form.as_p }}
-        <button type="submit">Create</button>
+    {{ user_form.as_p }}
+    <button type="submit" name="create_user">Create</button>
 </form>
 
+<h2>Delete User by CPF</h2>
+<form method="post" style="margin-top: 20px;">
+    {% csrf_token %}
+    {{ delete_form.as_p }}
+    <button type="submit" name="delete_user">Delete</button>
+</form>
+
+{% if messages %}
+<ul>
+    {% for message in messages %}
+    <li>{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
 {% endblock %}

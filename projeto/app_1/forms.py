@@ -22,6 +22,16 @@ class UserForm(forms.ModelForm):
         model = User
         fields = ['name', 'cpf', 'email', 'password','join_date']
 
+
+class UserDeleteForm(forms.Form):
+    cpf = forms.CharField(max_length=11, required=True, label='CPF')
+
+    def clean_cpf(self):
+        data = self.cleaned_data['cpf']
+        if not User.objects.filter(cpf=data).exists():
+            raise forms.ValidationError("No user found with this CPF.")
+        return data
+
 class UserChoiceField(forms.ModelChoiceField):
     def label_from_instance(self, obj):
         return obj.name

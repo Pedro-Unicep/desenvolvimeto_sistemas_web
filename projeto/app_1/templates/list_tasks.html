@@ -21,6 +21,9 @@
       <td class="task_description">{{ task.description }}</td>
       <td class="task_date">{{ task.date }}</td>
       <td class="task_cost">R$ {{ task.cost }}</td>
+      <td>
+        <button onclick="deleteTask('{{ task.id }}')">Delete</button>
+      </td>
     </tr>
     {% endfor %}
     {% if tasks.count == 0 %}
@@ -32,5 +35,28 @@
     {% endif %}
     </tbody>
   </table>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+function deleteTask(taskId) {
+    if (confirm('Are you sure you want to delete this task?')) {
+        $.ajax({
+            url: '{% url "delete_task" 0 %}'.replace('0', taskId),
+            type: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            success: function() {
+                $('#task-' + taskId).remove();
+                alert('Task deleted successfully.');
+                window.location.reload();
+            },
+            error: function() {
+                alert('Failed to delete the task.');
+            }
+        });
+    }
+}
+</script>
 
 {% endblock %}

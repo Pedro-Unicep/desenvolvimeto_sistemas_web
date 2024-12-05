@@ -1,6 +1,21 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+
 from .models import Usuario
+
+def sincrono_view(request):
+    return render(request, 'sincrono.html')
+
+def assincrono_view(request):
+    return render(request, 'assincrono.html')
+
+def fetch_teste_txt(request):
+    try:
+        with open('app_1/teste.txt', 'r') as file:
+            content = file.read()
+    except FileNotFoundError as e:
+        content = 'Arquivo não encontrado.'
+    return HttpResponse(content)
 
 
 def index(request):

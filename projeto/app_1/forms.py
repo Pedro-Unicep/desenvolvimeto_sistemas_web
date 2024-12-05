@@ -1,4 +1,3 @@
-from dal import autocomplete
 from django import forms
 from .models import User, Task
 from django.utils import timezone
@@ -16,7 +15,6 @@ class UserForm(forms.ModelForm):
         widget=forms.DateInput(attrs={'type': 'date'}),
         required=True
     ))
-
 
     password = forms.CharField(widget=forms.PasswordInput, required=True)
     
